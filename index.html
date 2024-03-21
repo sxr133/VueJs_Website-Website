@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Steve Rousseau - Software Engineer</title>
+		<link rel="stylesheet" type="text/css" href="styles/stylesheet.css">
+		  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+			<link href="styles/stylesheet.css" rel="stylesheet">
+		  <script src="https://unpkg.com/vue@3.4.9/dist/vue.global.js"></script>
+	</head>
+	<body>
+		<div id="content" class="containter">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="#">My Profile</a>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li v-for="(link, index) in links" class="nav-item" :key="index">
+							<a 
+								class="nav-link" 
+								aria-current="page" 
+								:href="link.url"
+								:title="`This link goes to the ${link.text} page`"
+							>{{ link.text }}</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div class="header">
+				<h1>{{ headerTitle }}</h1>
+			</div>
+		
+			<img src="pictures/profile.jpg" alt="Profile Picture" class="profile-image">
+
+			<div class="main-content">
+				<h2>{{ aboutPageTitle }}</h2>
+				
+				<p>{{ aboutContent }}</p>
+				
+				<h2>{{ skillsTitle }}</h2>
+				
+				<div class="skills-section">
+					<div v-for="skill in skillList" :key="skillList.id" class="skill">
+						<h3>{{ skill.title }}</h3>
+						<p>{{ skill.description }}</p> 
+					</div> 
+			</div>
+		</div>
+		<script>
+			Vue.createApp({
+				data() {
+					return {
+						links: [
+										{text: 'Home', url: 'index.html'}, 
+										{text: 'About', url: 'about.html'},
+										{text: 'Skills', url: 'skills.html'}
+									]
+					};
+				}
+			}).mount('nav');
+
+			Vue.createApp({
+				
+				data() {
+					return {
+						headerTitle: 'Steve Rousseau - Software Engineer',
+						aboutPageTitle: 'About Me',
+						aboutContent: `Hello, I'm Steve Rousseau, a passionate Full Stack Developer. 
+													 I love tackling complex problems and turning them into beautiful, 
+													 efficient code. Check out my skills below!`,
+						skillsTitle: 'Skills',
+						skillList: [
+								{id: 0, title: 'Python', description: 'I have a strong proficiency in Python and use it in many of my projects.'},
+								{id: 1, title: 'HTML', description: 'I have a solid understanding of HTML and use it as the backbone of my web projects.'},
+								{id: 2, title: 'CSS', description: 'I use CSS to create beautiful, responsive web designs.'},
+								{id: 3, title: 'JavaScript', description: 'I use JavaScript to create dynamic, interactive web applications.'},
+								{id: 4, title: 'Vue JS', description: 'I use Vue JS framework for building user interfaces.'},
+								{id: 5, title: 'Git', description: 'Proficient in Git version control system.'},
+								{id: 6, title: 'Command Line', description: 'Proficient in batch scripting, automation, and system management.'},
+								{id: 7, title: 'Netlify', description: 'Proficient with modern web development tools and technologies.'}
+
+						]
+					};
+				}
+			}).mount('#content');
+		</script>
+	</body>
+</html>
