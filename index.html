@@ -13,70 +13,91 @@
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#">My Profile</a>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li v-for="(link, index) in links" class="nav-item" :key="index">
+						<li v-for="(page, index) in pages" class="nav-item" :key="index">
 							<a 
 								class="nav-link" 
 								aria-current="page" 
-								:href="link.url"
-								:title="`This link goes to the ${link.text} page`"
-							>{{ link.text }}</a>
+								:href="page.link.url"
+								:title="`This link goes to the ${page.link.text} page`"
+								@click.prevent="activePage = index"
+							>{{ page.link.text }}</a>
 						</li>
 					</ul>
 				</div>
-			</nav>
+			</nav> 
+
 			<div class="header">
-				<h1>{{ headerTitle }}</h1>
+				<h1>{{ header.title }}</h1>
+				<img :src="header.image" alt="Profile Picture" class="profile-image">
 			</div>
 		
-			<img src="pictures/profile.jpg" alt="Profile Picture" class="profile-image">
-
+			
+			
 			<div class="main-content">
-				<h2>{{ aboutPageTitle }}</h2>
-				
-				<p>{{ aboutContent }}</p>
-				
-				<h2>{{ skillsTitle }}</h2>
-				
-				<div class="skills-section">
-					<div v-for="skill in skillList" :key="skillList.id" class="skill">
-						<h3>{{ skill.title }}</h3>
-						<p>{{ skill.description }}</p> 
-					</div> 
-			</div>
+				<div v-if="activePage === 2"> <!-- Show skills only if Skills page is active -->
+					<h2>{{ pages[activePage].pageTitle }}</h2>
+					<div class="skills-section">
+						<div v-for="(skill, index) in pages[activePage].content" class="skill" :key="index">
+							<h3>{{ pages[activePage].content[index].title }}</h3>
+							<p>{{ pages[activePage].content[index].description }}</p>
+						</div>
+					</div>
+				</div>
+				<div v-else-if = "activePage != 2">
+					<h2>{{ pages[activePage].pageTitle }}</h2>
+					<p>{{ pages[activePage].content }}</p>
+				</div>
+
 		</div>
 		<script>
 			Vue.createApp({
 				data() {
 					return {
-						links: [
-										{text: 'Home', url: 'index.html'}, 
-										{text: 'About', url: 'about.html'},
-										{text: 'Skills', url: 'skills.html'}
-									]
-					};
-				}
-			}).mount('nav');
+						activePage: 0,
+						header: {
+							title: 'Steve Rousseau - Software Engineer',
+							image: 'pictures/profile.jpg'
+						},
+						pages: [
+							{
+								link: {text: 'Home', url: 'index.html'},
+								pageTitle: '',
+								content: ''
 
-			Vue.createApp({
-				
-				data() {
-					return {
-						headerTitle: 'Steve Rousseau - Software Engineer',
-						aboutPageTitle: 'About Me',
-						aboutContent: `Hello, I'm Steve Rousseau, a passionate Full Stack Developer. 
+							},
+							{
+								link: {text: 'About', url: 'about.html'},
+								pageTitle: 'About Page',
+								content: `Hello, I'm Steve Rousseau, a passionate Full Stack Developer. 
 													 I love tackling complex problems and turning them into beautiful, 
 													 efficient code. Check out my skills below!`,
-						skillsTitle: 'Skills',
-						skillList: [
-								{id: 0, title: 'Python', description: 'I have a strong proficiency in Python and use it in many of my projects.'},
-								{id: 1, title: 'HTML', description: 'I have a solid understanding of HTML and use it as the backbone of my web projects.'},
-								{id: 2, title: 'CSS', description: 'I use CSS to create beautiful, responsive web designs.'},
-								{id: 3, title: 'JavaScript', description: 'I use JavaScript to create dynamic, interactive web applications.'},
-								{id: 4, title: 'Vue JS', description: 'I use Vue JS framework for building user interfaces.'},
-								{id: 5, title: 'Git', description: 'Proficient in Git version control system.'},
-								{id: 6, title: 'Command Line', description: 'Proficient in batch scripting, automation, and system management.'},
-								{id: 7, title: 'Netlify', description: 'Proficient with modern web development tools and technologies.'}
+							},
+							{
+								link: {text: 'Skills', url: 'skills.html'},
+								pageTitle: 'Skills Page',
+								content:  [
+													{id: 0, title: 'Python', description: 'I have a strong proficiency in Python and use it in many of my projects.'},
+													{id: 1, title: 'HTML', description: 'I have a solid understanding of HTML and use it as the backbone of my web projects.'},
+													{id: 2, title: 'CSS', description: 'I use CSS to create beautiful, responsive web designs.'},
+													{id: 3, title: 'JavaScript', description: 'I use JavaScript to create dynamic, interactive web applications.'},
+													{id: 4, title: 'Vue JS', description: 'I use Vue JS framework for building user interfaces.'},
+													{id: 5, title: 'Git', description: 'Proficient in Git version control system.'},
+													{id: 6, title: 'Command Line', description: 'Proficient in batch scripting, automation, and system management.'},
+													{id: 7, title: 'Netlify', description: 'Proficient with modern web development tools and technologies.'}
+							]
+							},
+							{
+								link: {text: 'Projects', url: 'projects.html'},
+								pageTitle: 'Projects Page',
+								content: 'This is the project page'
 
+							},
+							{
+								link: {text: 'Contact', url: 'contact.html'},
+								pageTitle: 'Contact Page',
+								content: 'This is the contact page'
+
+							}
 						]
 					};
 				}
