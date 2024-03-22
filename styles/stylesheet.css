@@ -28,13 +28,15 @@ body {
   padding: 20px;
 }
 
-.skills-section {
+.skills-section,
+.project-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   margin-bottom: 30px;
 }
-.skill {
+.skill, 
+.project{
   flex: 1 0 200px;
   margin: 10px;
   text-align: center;

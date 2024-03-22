@@ -11,7 +11,7 @@
 		<div id="content" class="containter">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="#">My Profile</a>
+					<a class="navbar-brand" href="#">My Portfolio</a>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li v-for="(page, index) in pages" class="nav-item" :key="index">
 							<a 
@@ -30,9 +30,7 @@
 				<h1>{{ header.title }}</h1>
 				<img :src="header.image" alt="Profile Picture" class="profile-image">
 			</div>
-		
-			
-			
+				
 			<div class="main-content">
 				<div v-if="activePage === 2"> <!-- Show skills only if Skills page is active -->
 					<h2>{{ pages[activePage].pageTitle }}</h2>
@@ -43,7 +41,19 @@
 						</div>
 					</div>
 				</div>
-				<div v-else-if = "activePage != 2">
+				<div v-if="activePage === 3"> <!-- Show skills only if Skills page is active -->
+					<h2>{{ pages[activePage].pageTitle }}</h2>
+					<div class="project-section">
+						<div v-for="(projectCategory, index) in pages[activePage].pageProjects" class="project" :key="index">
+							<h3>{{ projectCategory.pageSubTitle }}</h3>
+							<div v-for="(project, index) in projectCategory.content" class="project" :key="index">
+								<h5>{{ project.title }}</h5>
+								<p>{{ project.description }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div v-else-if = "activePage != 2 && activePage != 3">
 					<h2>{{ pages[activePage].pageTitle }}</h2>
 					<p>{{ pages[activePage].content }}</p>
 				</div>
@@ -89,13 +99,30 @@
 							{
 								link: {text: 'Projects', url: 'projects.html'},
 								pageTitle: 'Projects Page',
-								content: 'This is the project page'
-
+								pageProjects: [
+									{	pageSubTitle: 'JavaScript',
+										content: [
+														{id: 0, title: 'Guess Word', description: "A game where you can win 'fake' money. it's close to 'Wheel of Fortune'."},
+														{id: 1, title: 'Whac-a-Mole', description: 'A game where you must click on the mole with the click of the mouse.'},
+														{id: 2, title: 'Space Invaders', description: 'A game where you must shoot aliens.  Usage of the arrow keys.'},
+														{id: 3, title: 'Rock-Paper-Scissors', description: 'A game where you play agains the computer.'},
+														{id: 4, title: 'Memory Game', description: 'A game where you must find matching cards that are hidden.'},
+														{id: 5, title: 'Connect Four', description: 'A game that resembles to the game you played when you were a child, connect four dots in a row.'},
+														{id: 6, title: '2d Breakout', description: 'A game where you must break down blocks using the left and right arrow keys to direct the ball.'},
+														{id: 7, title: 'Frogger', description: 'A game where you must direct your frog from a starting point to the end point.  You must avoid the traffic and the water.'}
+										]
+									},
+									{	pageSubTitle: 'Python',
+										content: [
+														{id: 0, title: 'Virtual Island Survival', description: "Text game via console where you try to survive on an island with coconuts and 1 goat and few rocks."},
+										]
+									}	
+								]
 							},
 							{
 								link: {text: 'Contact', url: 'contact.html'},
 								pageTitle: 'Contact Page',
-								content: 'This is the contact page'
+								content: 'can put a form and my linkedin profile link'
 
 							}
 						]
